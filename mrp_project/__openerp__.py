@@ -6,12 +6,14 @@
 {
     "name": "MRP Project Link",
     "summary": "Link production with projects",
-    "version": "8.0.1.1.0",
+    "version": "8.0.1.2.0",
     "depends": [
         "mrp_analytic",
         "project",
+        "project_timesheet",
     ],
     'license': 'AGPL-3',
+    "images": [],
     "author": "OdooMRP team,"
               "AvanzOSC,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
@@ -22,7 +24,8 @@
         "views/mrp_production_view.xml",
         "views/project_project_view.xml",
         "views/account_analytic_line_view.xml",
-        "views/project_task_view.xml"
+        "views/project_task_view.xml",
+        "views/hr_analytic_timesheet.xml"
     ],
     'installable': True,
     'auto_install': False,

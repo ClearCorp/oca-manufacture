@@ -26,15 +26,35 @@ https://github.com/OCA/product-variant
 Usage
 =====
 
-Operating with a manufacture order, analytic entries adding costs will be
+Processing a manufacture order, analytic entries adding costs will be
 created when:
 
 * Some raw material is consumed.
 * A work order is finished or paused.
+* Also, together with *project_timesheet* module, users time is also translated
+  to costs in the linked analytic account.
 
-Also, thanks to *project_timesheet* modules, users time is also translated to
-costs in the linked analytic account.
+The sum of all these analytic entries is the real cost:
 
+.. figure:: mrp_production_real_cost/static/description/mrp_real_cost.png
+   :alt: MRP Real Cost Details
+
+Cost/cycle = all overhead costs associated with running one work centre cycle
+(where a cycle is the Number of Cycles as calculated in the Work Order).
+
+Cost/hr = calculated as all overhead costs associated with running the work
+centre (excluding any costs covered in the cost per cycle) / the number of
+hours the work centre is operating.
+
+Pre-operation cost = Time before prod. x cost of the Pre-operation costing
+product
+
+Post-operation cost = Time after prod. x cost of the Post-operation costing
+product
+
+It’s up to the user to determine overhead costs as accurately as possible
+and use all, some or none of them in order to reflect their manufacturing
+process.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
@@ -62,6 +82,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Ana Juaristi <ajuaristio@gmail.com>
 * Ainara Galdona <agaldona@avanzosc.es>
+* Antonio Espinosa <antonioea@antiun.com>
 
 Images
 ------

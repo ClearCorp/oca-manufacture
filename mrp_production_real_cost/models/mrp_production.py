@@ -31,8 +31,15 @@ class MrpProduction(models.Model):
     @api.multi
     def action_production_end(self):
         res = super(MrpProduction, self).action_production_end()
-        self.mapped('move_created_ids2').filtered(
-            lambda l: l.state == 'done').product_price_update_production_done()
+        for production in self:
+            # This is needed because commit
+            # https://github.com/odoo/odoo/commit/
+            # 6f29bfc181d23d70d29776d96b4318e9ee2c93a9
+            # introduces a weird behavior on the next call, provoking an error.
+            production.sudo().refresh()
+            production.mapped('move_created_ids2').filtered(
+                lambda l: l.state == 'done'
+                ).product_price_update_production_done()
         return res
 
     @api.model
@@ -73,3 +80,13 @@ class MrpProduction(models.Model):
             'product_uom_id': product.uom_id.id,
             'general_account_id': general_account.id,
         }
+
+    @api.multi
+    def _costs_generate(self):
+        """
+        As we are generating the account_analytic_lines for MO in the
+        current module, we override this method in order to avoid
+        duplicates created in the parent class. Any other module
+        inheriting this method should take this into account!
+        """
+        return
